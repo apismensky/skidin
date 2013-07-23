@@ -18,6 +18,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:untitled_development</jdbc-url>
       <user-name>untitled</user-name>
+      <user-password>dfd9dfc6dfcbdfdedfcf</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-driver-license.txt</url>
@@ -31,6 +32,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:untitled_test</jdbc-url>
       <user-name>untitled</user-name>
+      <user-password>dfd9dfc6dfcbdfdedfcf</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-driver-license.txt</url>

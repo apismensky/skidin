@@ -1,4 +1,8 @@
 Untitled::Application.routes.draw do
+
+  get "groups/index"
+  match 'groups/:id' => 'groups#show'
+\
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
