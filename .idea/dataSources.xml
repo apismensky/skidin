@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="197526867">
+  <component name="DataSourceManagerImpl" format="xml" hash="3152111663">
     <data-source source="LOCAL" name="Rails apismensky-app: production" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="2d8a0291-a58d-4383-8dc2-028cc948e41b">
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:untitled_production</jdbc-url>
@@ -32,6 +32,36 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:untitled_test</jdbc-url>
       <user-name>untitled</user-name>
+      <user-password>dfd9dfc6dfcbdfdedfcf</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-driver-license.txt</url>
+        </library>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-9.2-1002.jdbc4.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="Rails foobar: test" product="PostgreSQL" version="9.2.2" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.2 JDBC4 (build 1002)" uuid="ae814f58-134c-4c0a-8c0f-6a4d78c11ed0">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1/catalog_test</jdbc-url>
+      <user-name>slate</user-name>
+      <user-password>dfd9dfc6dfcbdfdedfcf</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-driver-license.txt</url>
+        </library>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/IntelliJIdea10/jdbc-drivers/postgresql-9.2-1002.jdbc4.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="Rails foobar: development" product="PostgreSQL" version="9.2.2" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.2 JDBC4 (build 1002)" uuid="984c62f0-0030-44b7-93b3-d09893605dd2">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1/catalog_development</jdbc-url>
+      <user-name>slate</user-name>
       <user-password>dfd9dfc6dfcbdfdedfcf</user-password>
       <libraries>
         <library>
