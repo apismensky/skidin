@@ -1,0 +1,19 @@
+machine:
+  pre:
+    # Use Heroku pipelines
+    # See https://devcenter.heroku.com/articles/labs-pipelines
+    - heroku plugins:install git://github.com/heroku/heroku-pipeline.git
+    # Use Heroku Exit Status - Adds exit status to heroku run commands
+    # See https://github.com/glenngillen/heroku-exit-status
+    - heroku plugins:install https://github.com/glenngillen/heroku-exit-status.git
+  environment:
+    #
+deployment:
+  production:
+    branch: master
+    commands:
+      # Test
+      - git push -q -f git@heroku.com:skidin-prod.git $CIRCLE_SHA1:master
+      - heroku run rake db:migrate -a skidin-prod
+      - heroku run rake db:seed -a skidin-prod
+      - heroku restart -a skidin-prod
