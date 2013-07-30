@@ -11,9 +11,11 @@ machine:
 deployment:
   production:
     branch: master
+    heroku:
+      appname: skidin-prod
     commands:
       # Test
-      - git push -q -f git@heroku.com:skidin-prod.git $CIRCLE_SHA1:master
+      - git push -q -f https://github.com/apismensky/skidin.git $CIRCLE_SHA1:master
       - heroku run rake db:migrate -a skidin-prod
       - heroku run rake db:seed -a skidin-prod
       - heroku restart -a skidin-prod
