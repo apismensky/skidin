@@ -11,8 +11,8 @@ machine:
 deployment:
   production:
     branch: master
-    heroku:
-      appname: skidin-prod
+    #heroku:
+    #  appname: skidin-prod
     commands:
       # Test
       - git push -q -f https://github.com/apismensky/skidin.git $CIRCLE_SHA1:master
