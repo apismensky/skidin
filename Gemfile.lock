@@ -147,5 +147,5 @@ DEPENDENCIES
   rake (= 10.1.0)
   rspec-rails (~> 2.0)
   sass-rails (~> 3.2.3)
-  tire
+  tire (~> 0.6.0)
   uglifier (>= 1.0.3)

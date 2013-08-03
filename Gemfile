@@ -5,7 +5,7 @@ gem 'pg'
 gem 'rake', '10.1.0'
 gem 'mongoid', '~> 3.1.2'
 gem 'bson_ext'
-gem 'tire'
+gem "tire", "~> 0.6.0"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
