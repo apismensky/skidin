@@ -3,7 +3,7 @@ Untitled::Application.routes.draw do
   get "groups/index"
   get "parts/index"
   match 'parts/:id' => 'parts#show'
-
+  match 'find' => 'parts#search'
   match 'groups/:id' => 'groups#show'
 \
   # The priority is based upon order of creation:
