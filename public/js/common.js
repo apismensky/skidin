@@ -1,7 +1,4 @@
 // Common JavaScript code
-var serviceUrls = ["app/rest/srv0/",       //0
-                   "app/rest/srv1/"        //1
-];
 
 var evalStr = ""; 
 var searchBtnMap = new Map();
@@ -25,78 +22,27 @@ function loadData(url) {
 		var myStore = new dojo.store.Memory();		
 		// Construct grid header
 		evalStr = "[[";
-    		for(var j = 0; j < json.reports.rows[0].dbrecords.length; j++) {
-			var name = json.reports.rows[0].dbrecords[j].name;
-			var type = json.reports.rows[0].dbrecords[j].type;
-			var size = json.reports.rows[0].dbrecords[j].size;
-			var cname = name.replace(/\[\w+\]/gi, "");
-			evalStr += "{name:\"" + cname + "\", field:\"" + cname + "\"";
-			if(type == "VARCHAR2") {
-				evalStr += ", formatter: formatString"; 
-			} else if(type == "NUMBER") {
-				if(cname.indexOf("Amount") >= 0 || cname.indexOf("Amt") >= 0 || cname.indexOf("Total") >= 0) {
-					evalStr += ", formatter: formatCurrency, styles: 'text-align: right;'";
-				} else {
-					evalStr += ", formatter: formatNumber, styles: 'text-align: right;'";
+		var evalStrComplete = 0;
+		for(key in json) {
+  			var obj = json[key];
+  			var rowEval = "myStore.add({"; 
+  			for(name in obj) {
+  				var value = obj[name];
+  				if(name == null || name == "") { name = "N"; }
+	  			if(value == null) { value = ""; }
+	  			if(evalStrComplete == 0) {
+					evalStr += "{name:\"" + name + "\", field:\"" + name + "\"},";
 				}
-			} else if(type == "DATE") {
-				evalStr += ", formatter: formatDate";
-				size = 10;
+				//value = value.replace(/"/gi, "'");
+				rowEval += "\"" + name + "\": \"" + value + "\", ";
 			}
-			// Now calculate relative column width in %
-			var k = 0.9; // default const k
-			if(size < 5) k = 0.5;
-			else if(size < 10) k = 0.7;
-			else if(size < 20) k = 0.8;
- 			else if(size > 20) k = 1;
-			else if(size > 30) k = 1.1;
-			else if(size > 40) k = 1.2;
-			var colWidthPer = k*(100/json.reports.rows[0].dbrecords.length);
-			evalStr += ", width: \""+colWidthPer+"%\"}";
-			if(j < json.reports.rows[0].dbrecords.length - 1) { evalStr += ", "; }
+			if(evalStrComplete == 0) {
+				evalStr += "{name:\"X\", field:\"X\"} ]];";
+				evalStrComplete = 1;
+			}
+			rowEval += "\"X\": \"\" });";
+			eval(rowEval);
   		}
-  		evalStr += "]];";
-	  	// process all grid data and add into myStore
-	  	for(var i = 0; i < json.reports.rows.length; i++) {
-	    	var recCount = json.reports.rows[i].colsCount;
-	    	var rowEval = "myStore.add({"; 
-	  		for(var j = 0; j < json.reports.rows[i].dbrecords.length; j++) {
-	  			var name = json.reports.rows[i].dbrecords[j].name;
-	  			var cname = name.replace(/\[\w+\]/gi, "");
-	  			var value = json.reports.rows[i].dbrecords[j].value;
-	  			if(value == null) {
-	  				value = "";
-	  			}
-	  			// make sure no " exists in value as it will break eval statement below:
-	  			value = value.replace(/"/gi, "'");
-	  			var type = json.reports.rows[i].dbrecords[j].type;
-	  			if(type == "NUMBER" && value != "") {
-	  				if(name.indexOf("[TOTAL]") > 0) {
-						var indx = name.indexOf("[TOTAL]");
-						name = name.substring(0, indx);
-						name = name.replace(/<br\/>/g, " ");
-						var total = totalMap.get(name);
-						if(total == null) total = 0;
-						if(total != -1) {
-							try {
-								total += parseFloat(value);
-							} catch(err) { // If parsing failed - mark total as invalid:
-								total = -1;
-							}
-							totalMap.put(name, total);
-						}
-					}
-  					rowEval += "\"" + cname + "\": " + value; 
-	  			} else {
-  					rowEval += "\"" + cname + "\": \"" + value + "\"";
-  				}
-	 			if(j < json.reports.rows[i].dbrecords.length - 1) {
-	 				rowEval += ", ";
-	 			} 
-	  		}
-	  		rowEval += "});";
-	  		eval(rowEval);
-	  	}
   		// Create grid#:	
   		var dataStore  = dojo.data.ObjectStore({objectStore: myStore});
  		var grid = new dojox.grid.EnhancedGrid({
