@@ -21,40 +21,43 @@ function loadData(url) {
 		var totalMap = new Map(); 
 		var myStore = new dojo.store.Memory();		
 		// Construct grid header
-		evalStr = "[[";
-		var evalStrComplete = 0;
+		var layout = [[
+					{name:"id", field:"_id"},
+					{name:"company", field:"company"},
+					{name:"cost", field:"cost"},
+					{name:"date_in_inv", field:"date_in_inv"},
+					{name:"date_phase_out", field:"date_phase_out"},
+					{name:"days_supply", field:"days_supply"},
+					{name:"description", field:"description"},
+					{name:"last_sale_date", field:"last_sale_date"},
+					{name:"list", field:"list"},
+					{name:"manufacturer", field:"manufacturer"},
+					{name:"mtd_net_demand", field:"mtd_net_demand"},
+					{name:"number", field:"number"},
+					{name:"on_order", field:"on_order"},
+					{name:"qty_on_hand", field:"qty_on_hand"},
+					{name:"shelf_location", field:"shelf_location"},
+					{name:"status", field:"status"}
+					]];
 		for(key in json) {
   			var obj = json[key];
   			var rowEval = "myStore.add({"; 
+  			var i = 0;
   			for(name in obj) {
   				var value = obj[name];
-  				if(name == null || name == "") { name = "N"; }
-	  			if(value == null) { value = ""; }
-	  			if(evalStrComplete == 0) {
-					evalStr += "{name:\"" + name + "\", field:\"" + name + "\"},";
-				}
-				//value = value.replace(/"/gi, "'");
+  				if(name == "") { name = "N"; }
 				rowEval += "\"" + name + "\": \"" + value + "\", ";
-			}
-			if(evalStrComplete == 0) {
-				evalStr += "{name:\"X\", field:\"X\"} ]];";
-				evalStrComplete = 1;
 			}
 			rowEval += "\"X\": \"\" });";
 			eval(rowEval);
   		}
   		// Create grid#:	
   		var dataStore  = dojo.data.ObjectStore({objectStore: myStore});
- 		var grid = new dojox.grid.EnhancedGrid({
+ 		var grid = new dojox.grid.DataGrid({
  			id: "grid",
 			store: dataStore,
-			structure: evalStr,
-			height: "60%",
-			columnReordering: true,
-			plugins: {
-				nestedSorting: true,
-				printer: true
-			}
+			structure: layout,
+			height: "80%"
 		}, "gridDiv"); 
 		grid.startup();
   	});	
