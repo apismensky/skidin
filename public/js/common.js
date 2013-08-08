@@ -22,22 +22,22 @@ function loadData(url) {
 		var myStore = new dojo.store.Memory();		
 		// Construct grid header
 		var layout = [[
-					{name:"id", field:"_id"},
-					{name:"company", field:"company"},
-					{name:"cost", field:"cost"},
-					{name:"date_in_inv", field:"date_in_inv"},
-					{name:"date_phase_out", field:"date_phase_out"},
-					{name:"days_supply", field:"days_supply"},
-					{name:"description", field:"description"},
-					{name:"last_sale_date", field:"last_sale_date"},
-					{name:"list", field:"list"},
-					{name:"manufacturer", field:"manufacturer"},
-					{name:"mtd_net_demand", field:"mtd_net_demand"},
-					{name:"number", field:"number"},
-					{name:"on_order", field:"on_order"},
-					{name:"qty_on_hand", field:"qty_on_hand"},
-					{name:"shelf_location", field:"shelf_location"},
-					{name:"status", field:"status"}
+					{name:"Id", field:"_id", width:"200px"},
+					{name:"Company", field:"company", width:"90px" },
+					{name:"Cost", field:"cost", width:"80px"},
+					{name:"Date in inventory", field:"date_in_inv", width:"70px"},
+					{name:"Date phase out", field:"date_phase_out", width:"70px"},
+					{name:"Days supply", field:"days_supply", width:"70px"},
+					{name:"Description", field:"description", width:"200px"},
+					{name:"Last sale date", field:"last_sale_date", width:"70px"},
+					{name:"List", field:"list", width:"70px"},
+					{name:"Manufacturer", field:"manufacturer", width:"90px"},
+					{name:"Mtd net demand", field:"mtd_net_demand", width:"60px"},
+					{name:"Number", field:"number", width:"100px"},
+					{name:"On order", field:"on_order", width:"60px"},
+					{name:"Qty on hand", field:"qty_on_hand", width:"60px"},
+					{name:"Shelf location", field:"shelf_location", width:"60px"},
+					{name:"Status", field:"status", width:"50px"}
 					]];
 		for(key in json) {
   			var obj = json[key];
@@ -233,50 +233,6 @@ function addSelectWithAll(container, id, url, loadingIconId) {
 	return select;
 } 
 
-function initSelect(select, jsonUrl, loadingIconId) {
-	$.getJSON(jsonUrl, 
-		function(json) {
-				for(var i = 0; i < json.reports.rows.length; i++) {
-			  		for(var j = 0; j < json.reports.rows[i].dbrecords.length; j++) {
-			  			var value = json.reports.rows[i].dbrecords[j].value;
-			  			if(value) {
-			  				select.addOption( { label: value, value: value } );
-			  			} 
-			  		}
-			  	}
-				if(loadingIconId) {
-					document.getElementById(loadingIconId).style.visibility="hidden";
-				}
-		});
-}
-
-
-function json2HTML(json) {
-	var HTML = "JSON {";
-	var resCount = json.reports.count;
-	var repName = json.reports.name;
-	HTML += resCount + " records, Message: " + repName;
-	for(var i = 0; i < json.reports.rows.length; i++) {
-		HTML += "<br/>{"; 
-		for(var j = 0; j < json.reports.rows[i].dbrecords.length; j++) {
-			var name = json.reports.rows[i].dbrecords[j].name;
-			var value = json.reports.rows[i].dbrecords[j].value;
-			var type = json.reports.rows[i].dbrecords[j].type;
-			HTML += (j+1) + ":[name = '" + name + "', type = '" + type + "', value = '" + value + "']";
-			if(j < (json.reports.rows[i].dbrecords.length-1)) {
-				HTML += ",<br/>";
-			}
-		}
-		HTML += "},";
-		if(i >= maxJsonRowsDisplayed-1) {
-			HTML += "<br/>{ ... " + (json.reports.rows.length - maxJsonRowsDisplayed) + " more records ... }";
-			break;
-		}
-	}
-	HTML += " }";
-	return HTML;
-}
-
 function formatString(str) {
 	if(str == null) {
 		return "";
@@ -332,45 +288,6 @@ function formatDate(dt) {
 	}
 }
 
-
-function loadDataInDialog(url, title) {
-	$.getJSON(url, 
-			function(json) {
-				if(!json) {
-					alert("Could not retrieve data from " + url);
-					return;
-				}
-				var content = "<p>";
-				var counter = 0;
-				for(var j = 0; j < json.reports.rows[0].dbrecords.length; j++) {
-					var value = json.reports.rows[0].dbrecords[j].value;
-					if(value) {
-						content += value + "<br/>";
-						counter++;
-					}
-				}
-				content += "</p>";
-				if(counter > 0) {
-					showDialog(content, title);
-				} else {
-					alert("No data available from " + url);
-				}
-			});	
-}
-
-function showDialog(content, title) {
-	if(!title) { title = "Dialog"; }
-	require(["dojo/ready", "dijit/Dialog"], function(ready, Dialog){
-	    ready(function(){
-	        detDialog = new Dialog({
-	            title: title,
-	            content: formatAdvice(content),
-	            style: "width: 500px"
-	        });
-	        detDialog.show();
-	    });
-	});
-}
 
 function customEncodeURLParameter(param) {
 	var enc = encodeURIComponent(param);
