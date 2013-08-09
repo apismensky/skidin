@@ -64,8 +64,8 @@
               <form class="">
               <div class="input append"></div>
               <span class="add-on"></span>
-              <input type="text something" class="span8 offset1" placeholder="Search for auto-part here. Ex: Toyota Camry 2010 transmission"/>
-              <a class="search-btn" href="http://www.skidin.com/search.html"><i class="icon-search"></i><b> Search</b></a>
+              <input id="search-query" type="text something" class="span8 offset1" placeholder="Search for auto-part here. Ex: Toyota Camry 2010 transmission"/>
+              <a class="search-btn" href="javascript:loadSearch()"><i class="icon-search"></i><b> Search</b></a>
               </div>
               </form>
               </div>
@@ -173,6 +173,13 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+    function loadSearch() {
+      var query = document.getElementById("search-query").value;
+      var searchUrl = "http://www.skidin.com/dojo_search.html?"+query;
+      window.location.href = searchUrl;
+    }
+    </script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
