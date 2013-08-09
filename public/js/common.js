@@ -8,15 +8,11 @@ var emptyLabel = "&nbsp;&nbsp;&nbsp;&nbsp;";
 //Max Height of all select boxes except office select (defined in office-select.js)
 var maxSelectHeight = 200;
 
+var grid = null;
+
 // Load JSON data and display in a new tab from specified URL or from a form:
 function loadData(url) {
-	if(!url) {
-		if(!validateForm()) {
-			alert("Form is invalid. Please select all required fields and try again.");
-			return;
-		}
-		url = getDataUrl();
-	}
+	if(!url) { url = getDataUrl(); }
 	$.getJSON(url, function(json) {
 		var totalMap = new Map(); 
 		var myStore = new dojo.store.Memory();		
@@ -53,21 +49,18 @@ function loadData(url) {
   		}
   		// Create grid#:	
   		var dataStore  = dojo.data.ObjectStore({objectStore: myStore});
- 		var grid = new dojox.grid.DataGrid({
- 			id: "grid",
-			store: dataStore,
-			structure: layout,
-			height: "80%"
-		}, "gridDiv"); 
-		grid.startup();
+  		if(grid == null) {
+ 			grid = new dojox.grid.DataGrid({
+ 				id: "grid",
+				store: dataStore,
+				structure: layout,
+				height: "80%"
+			}, "gridDiv"); 
+			grid.startup();
+		} else {
+			grid.setStore(dataStore);
+		}
   	});	
-}
-
-function validateForm() {
-	return  validateItem('OfficeSelect')&&
-			validateItem('DateText')&&
-			validateItem('StartDateText')&&
-			validateItem('EndDateText'); 
 }
 
 function validateItem(id) {
@@ -159,7 +152,7 @@ function addStartAndEndAmounts(prefix) {
     }, prefix+"EndAmount");
 }
 
-function addSearchResetButtons(prefix) {
+function addSearchButton(prefix) {
 	if(prefix == null) {
 		prefix = "";
 	}
@@ -172,15 +165,6 @@ function addSearchResetButtons(prefix) {
 		}             
 	}, prefix+"Search");
 	searchBtn.startup();
-	searchBtnMap.put(prefix+"SearchButton", searchBtn);
-	var resetBtn = new dijit.form.Button({
-		id: prefix+"ResetButton",                     
-		label: "Reset", 
-		onClick: function(){ 
-			resetForm(); 
-		}             
-	}, prefix+"Reset");
-	resetBtn.startup();
 }
 
 function addCheckBox(container, id, checked) {

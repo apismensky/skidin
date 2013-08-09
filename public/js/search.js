@@ -19,11 +19,13 @@ require(["dojo/dom",
 	"dijit/form/Select",
 	"dijit/form/CheckBox"], 
 	function(dom, domConstruct) {
-	    // Call reusable function to add select drop down:
-	    // addSelect("Series", "Series", "http://localhost:8080/app/rest/service-url", "SeriesLoadingIcon");
-	    addTextBox("Query","QueryText");
+	    var queryTxtBox = addTextBox("Query","QueryText");
+	    if(qparm) {
+	    	queryTxtBox.set("value", qparm);
+	    	loadData();
+	    }
 	    // Add Search & Reset buttons:
-	    addSearchResetButtons();    
+	    addSearchButton();    
 }); 
 
 function getDataUrl() {
@@ -31,7 +33,4 @@ function getDataUrl() {
 	return serviceUrl + query;
 }
 
-function resetForm() {
-	document.getElementById("gridDiv").innerHTML = "";
-}
 

@@ -19,13 +19,17 @@
  		<form name='form'><table border='0' width='*'>
 		<tr><td><span id="Query"></span></td>
 		<!--<td><span id='Series'></span><span id='SeriesLoadingIcon'><img src='img/progress.gif'></span></td>-->
-		<td><span id='Search'>Search</span>&nbsp;<span id='Reset'>Reset</span></td></tr>
+		<td><span id='Search'>Search</span></td></tr>
 		</table></form>
 		<hr/>
 		<div id='gridDiv'>No Results</div>
 	</div>
     </div>
 </div>
+<script>
+var query = window.location.search;
+var qparm = query.substring(1);
+</script>
 <script src="js/map.js"></script>
 <script src="js/common.js"></script>
 <script src="js/search.js"></script>
