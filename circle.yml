@@ -16,6 +16,5 @@ deployment:
     commands:
       # Test
 #      - git push -q -f https://github.com/apismensky/skidin.git $CIRCLE_SHA1:master
-      - heroku run rake db:migrate
-      - heroku run rake db:seed
-      - heroku restart
+      - rake db:migrate
+      - rake db:seed
