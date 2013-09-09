@@ -11,7 +11,7 @@ class CartController < ApplicationController
 
     unless @cart
       @cart = Cart.new
-      @cart.account_id = current_account.id
+      @cart.account_id = nil
     end
 
     found = false
@@ -56,11 +56,11 @@ class CartController < ApplicationController
   private
 
   def cart_for_user
-    Cart.find_by_account_id current_account.id
+    Cart.first || Cart.new
   end
 
   def address_for_user 
-    current_account.addresses.first || Address.new
+    Address.first || Address.new
   end
 
 end
