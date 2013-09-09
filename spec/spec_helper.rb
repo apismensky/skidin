@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'shoulda-matchers'
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -11,7 +13,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 RSpec.configure do |config|
 
   # Include JSON Spec helpers:  https://github.com/collectiveidea/json_spec#readme
-  config.include JsonSpec::Helpers
+  #config.include JsonSpec::Helpers
 
   # ## Mock Framework
   #
