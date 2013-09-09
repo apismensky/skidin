@@ -102,7 +102,7 @@ describe CartController do
   describe "#cart_for_user" do
     it "returns a cart for the current account" do
       controller.stub(:current_account) { mock('account',:id => 1) }
-      Cart.should_receive :all
+      Cart.should_receive :first
       controller.send :cart_for_user
     end
   end
