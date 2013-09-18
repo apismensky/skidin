@@ -18,7 +18,7 @@
 #
 #end
 
-files = ['skidin_ddl_nofk.sql', 'insert_groups.sql', 'insert_subgroups.sql', 'E81.sql']
+files = ['skidin_ddl_nofk.sql', 'insert_groups.sql', 'insert_subgroups.sql', 'E81.sql', 'E60.sql', 'E60N.sql', 'E63N.sql', 'E81.sql', 'E87.sql', 'E90N.sql', 'F04.sql', 'F13.sql', 'RR3N.sql']
 connection = ActiveRecord::Base.connection
 
 files.each do |f|

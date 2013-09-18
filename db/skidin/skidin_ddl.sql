@@ -19,9 +19,9 @@ CREATE TABLE Body (
 );
 
 CREATE TABLE Model (
-	ID	char(10) NOT NULL,
-	SID	char(4) NOT NULL,
-	BID	char(3)	NOT NULL,
+	ID	char(10) PRIMARY KEY,
+	SID	char(4) REFERENCES Series(ID),
+	BID	char(3)	REFERENCES Body(ID),
 	Name	varchar(40) NOT NULL,
 	Region	char(3) NOT NULL
 );
@@ -39,11 +39,11 @@ CREATE TABLE Subgroups (
 );
 
 CREATE TABLE ProdCode (
-	ID	char(10) NOT NULL,
-	MID	char(10) NOT NULL,
-	BID	char(3) NOT NULL,
-	SID	char(4) NOT NULL,
-	Region  char(3) NOT NULL,
+	ID	char(10) PRIMARY KEY,
+	MID	char(10) REFERENCES Model(ID),
+	BID	char(3) REFERENCES Body(ID),
+	SID	char(4) REFERENCES Series(ID),
+	Region  char(3) CHECK (Region = 'US' OR Region = 'ECE'),
 	Engine	varchar(10) NOT NULL,
 	Steering char(1) CHECK (Steering = 'L' OR Steering = 'R'),
 	Description varchar(200)
@@ -51,21 +51,21 @@ CREATE TABLE ProdCode (
 
 CREATE TABLE ProdCodeDate (
 	ID	char(20) PRIMARY KEY,
-	PID	char(10) NOT NULL,
+	PID	char(10) REFERENCES ProdCode(ID),
 	ProdMonth Date NOT NULL
 );
 
 CREATE TABLE Diagram (
 	ID	char(15) PRIMARY KEY,
-	PID	char(20) NOT NULL,
-	SGID	char(5) NOT NULL,
+	PID	char(20) REFERENCES ProdCodeDate(ID),
+	SGID	char(5) REFERENCES Subgroups(ID),
 	Name	varchar(200) NOT NULL,
 	Image	varchar(100)
 );
 
 CREATE TABLE DiagramParts (
-	ID	char(30) PRIMARY KEY,
-	DID	char(15) NOT NULL,
+	ID	char(20) PRIMARY KEY,
+	DID	char(15) REFERENCES Diagram(ID),
 	DNO	integer,
 	Description varchar(200),
 	Supplement  varchar(50),
