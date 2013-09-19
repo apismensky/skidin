@@ -14,7 +14,7 @@ Untitled::Application.routes.draw do
   match 'subgroups/:gid' => 'subgroups#find_by_gid'
 
   match 'parts/:id' => 'parts#show'
-  match 'find' => 'diagramparts#search'
+
   match 'groups/:id' => 'groups#show'
 
   resources :diagramparts, only: [:index, :show]
@@ -25,6 +25,8 @@ Untitled::Application.routes.draw do
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
   match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
+
+  match 'tiresearch' => 'tire#search'
 
 \
   # The priority is based upon order of creation:

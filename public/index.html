@@ -48,7 +48,7 @@
           <div class="span12">
 
             <div class="header-description">
-              <a class="header-btn" href="#">I need parts</a>
+              <a class="header-btn" href="/diagramparts">Browse parts</a>
               </div>
               </div>
               </div><!-- /header-description -->
@@ -61,13 +61,14 @@
                 </div>
               <div class="row-fluid">
               <div class="span12 offset1">
-              <form class="">
-              <div class="input append"></div>
-              <span class="add-on"></span>
-              <input id="search-query" type="text something" class="span8 offset1" placeholder="Search for auto-part here. Ex: Toyota Camry 2010 transmission"/>
-              <a class="search-btn" href="javascript:loadSearch()"><i class="icon-search"></i><b> Search</b></a>
-              </div>
-              </form>
+                  <form action="/tiresearch">
+                      <div class="input append"></div>
+                      <span class="add-on"></span>
+                      <input id="search-query" type="text something" class="span8 offset1"
+                             placeholder="Search for auto-part here. Ex: BMW radio" name="q"
+                             onkeypress="submitOnEnter(this, event);"/>
+                      <a class="search-btn" href="javascript:loadSearch()"><i class="icon-search"></i><b> Search</b></a>
+                  </form>
               </div>
               </div>
               <div class="row-fluid">
@@ -176,8 +177,15 @@
     <script>
     function loadSearch() {
       var query = document.getElementById("search-query").value;
-      var searchUrl = "http://www.skidin.com/search.html?"+query;
-      window.location.href = searchUrl;
+      window.location.href = "/tiresearch?q="+query;
+    }
+
+    function submitOnEnter(inputElement, event)
+    {
+        if (event.keyCode == 13)
+        {
+            inputElement.form.submit();
+        }
     }
     </script>
     <script src="js/jquery.js"></script>
