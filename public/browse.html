@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/ref_styles.css">
 <!-- load dojo and provide config via data attribute -->
-<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"
 	data-dojo-config="async: true, isDebug: true, parseOnLoad: true, debugAtAllCosts: true">
 </script>
 </head>
@@ -16,10 +16,17 @@
 <div data-dojo-type="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'">
     	<div id="CenterContainer">
- 		<form name='form'><table border='0' width='*'>
-		<tr><td><span id="Query"></span></td>
-		<!--<td><span id='Series'></span><span id='SeriesLoadingIcon'><img src='img/progress.gif'></span></td>-->
-		<td><span id='Search'>Search</span></td></tr>
+ 		<form name='form'><table border='0' width='*'><tr>
+		<td><span id='Series'></span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Body'>Body</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Model'>Model</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Region'>Region</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Prod Month'>ProdMonth</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Engine'>Engine</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Steering'>Steering</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Group'>Group</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td><span id='Subgroup'>Subgroup</span></td><td>&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</td>
+		<td align="right"><span id='Search'>Search</span></td></tr>
 		</table></form>
 		<hr/>
 		<div id='gridDiv'>No Results</div>
@@ -32,7 +39,7 @@ var qparm = query.substring(1);
 </script>
 <script src="js/map.js"></script>
 <script src="js/common.js"></script>
-<script src="js/search.js"></script>
+<script src="js/browse.js"></script>
 </body>
 </html>
 

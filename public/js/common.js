@@ -197,25 +197,22 @@ function addSelectWithOptions(container, id, options) {
 	return select;
 } 
 
-function addSelect(container, id, url, loadingIconId) {
+function addSelect(container, id, url) {
 	var select = new dijit.form.Select({
-		id: id,
-		maxHeight: maxSelectHeight,
-		options: [{ label: emptyLabel, value: '', selected: true }]
+		name: id,
+		options: [{ label: id, value: '', selected: true }]
 	}, container);
-	initSelect(select, url, loadingIconId);
+        $.getJSON(url, 
+                function(json) {
+			for(idx in json) {
+                        	var obj = json[idx];
+				select.addOption( { label: obj['name'], value: obj['id'] } );
+                	}
+                });
 	return select;
-} 
+}
 
-function addSelectWithAll(container, id, url, loadingIconId) {
-	var select = new dijit.form.Select({
-		id: id,
-		maxHeight: maxSelectHeight,
-		options: [{ label: 'All', value: '*', selected: true }]
-	}, container);
-	initSelect(select, url, loadingIconId);
-	return select;
-} 
+
 
 function formatString(str) {
 	if(str == null) {
