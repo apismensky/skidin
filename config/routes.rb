@@ -17,15 +17,14 @@ Untitled::Application.routes.draw do
   match 'find' => 'diagramparts#search'
   match 'groups/:id' => 'groups#show'
 
-
-  resources :catalog, only: [:index, :show]
+  resources :diagramparts, only: [:index, :show]
 
   resources :cart, only: [:index]
   match 'cart' => 'cart#update', :via => :put, :as => 'cart_update'
   match 'cart' => 'cart#create', :via => :post, :as => 'cart'
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
-  match 'catalog/order' => 'catalog#order', :via => :post, :as => 'catalog_order'
+  match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
 
 \
   # The priority is based upon order of creation:

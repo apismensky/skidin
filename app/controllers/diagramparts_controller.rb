@@ -1,7 +1,17 @@
 class DiagrampartsController < ApplicationController
 
+  def index
+    @products = Diagrampart.where("sysid in (229,495,516,497, 519, 583, 508, 506)").limit 16
+  end
+
   def show
-    render json: Diagrampart.find(params[:id])
+    @product = Diagrampart.find_by_sysid(params[:id])
+  end
+
+  def order
+    cart = Cart.first
+    @success = true
+    cart.destroy if cart
   end
 
   def search

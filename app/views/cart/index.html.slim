@@ -5,29 +5,29 @@
       = form_tag(cart_update_path, :method => :put) do
         ul.products-list
           - for item in @cart.cart_items
-            - if item.product
+            - if item.diagrampart
               li.product.product-list-item
-                = link_to image_tag(item.product.image_small, :alt=> item.product.short_description), catalog_path(item.product.id), class: 'product-thumb'
+                = link_to image_tag('/img/Autopart5.jpg'), "/diagramparts/#{item.diagrampart.sysid}", class: 'product-thumb'
                 header.product-list-item-details
                   .product-item-actions
                     ' Qty. #{ number_field_tag 'quantity[]', item.quantity, :in => 1...10, :size => 1, class: 'quantity-input' }
                     = link_to cart_destroy_path(item), :confirm => 'Are you sure want to delete it?', :method => :delete do
                       = image_tag("bin.png")
-                  p.product-name = item.product.name
-                  p.product-points #{item.product.price} usd
+                  p.product-name = item.diagrampart.description
+                  p.product-points #{item.diagrampart.price} usd
         = submit_tag "Update", class: 'oc-btn'
-        = link_to "Continue shopping", catalog_index_path, class: 'oc-btn oc-btn-light'
+        = link_to "Continue shopping", "/diagramparts", class: 'oc-btn oc-btn-light'
     .cart-details
-      = form_tag catalog_order_path do
+      = form_tag '/diagramparts/order' do
           
         .cart-summary
           h2.cart-title Order Summary
 
           ul.cart-summary-list
             - for item in @cart.cart_items
-              - if item.product
+              - if item.diagrampart
                 li.cart-summary-list-item
-                  span.cart-summary-item-name = item.product.name
+                  span.cart-summary-item-name = item.diagrampart.description
                   span.cart-summary-item-points #{item.price} usd
 
             li.cart-summary-total
