@@ -14,7 +14,7 @@ Untitled::Application.routes.draw do
   match 'subgroups/:gid' => 'subgroups#find_by_gid'
 
   match 'parts/:id' => 'parts#show'
-  match 'find' => 'parts#search'
+  match 'find' => 'diagramparts#search'
   match 'groups/:id' => 'groups#show'
 
 
