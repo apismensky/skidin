@@ -10,4 +10,9 @@ class ModelsController < ApplicationController
     render json: @models
   end
 
+  def find_by_sid
+    @models = Model.where("sid='#{params['sid']}'")
+    render json: @models
+  end
+
 end
