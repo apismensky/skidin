@@ -7,6 +7,8 @@ Untitled::Application.routes.draw do
   get "models/index"
 
   match 'models/:sid/:bid' => 'models#find_by_sid_bid'
+  match 'prodcodes/:mid/:bid/:sid/:region' => 'prodcodes#find_by_sid_bid_mid_reg'
+  match 'prodcodedates/:pid' => 'prodcodedates#find_by_pid'
 
   match 'parts/:id' => 'parts#show'
   match 'find' => 'parts#search'
