@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.12'
 gem 'pg'
 gem 'rake', '10.1.0'
-gem 'mongoid', '~> 3.1.2'
+#gem 'mongoid', '~> 3.1.2'
 gem 'bson_ext'
 gem "tire", "~> 0.6.0"
 gem 'slim' ,'1.3.6'

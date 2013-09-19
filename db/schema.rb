@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130909212224) do
+ActiveRecord::Schema.define(:version => 20130919161135) do
 
   create_table "addresses", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(:version => 20130909212224) do
     t.string   "phone_number"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "body", :id => false, :force => true do |t|
+    t.string "id",   :limit => 3,  :null => false
+    t.string "name", :limit => 10, :null => false
   end
 
   create_table "cart_items", :force => true do |t|
@@ -45,11 +50,41 @@ ActiveRecord::Schema.define(:version => 20130909212224) do
 
   add_index "carts", ["account_id"], :name => "index_carts_on_account_id"
 
-  create_table "groups", :force => true do |t|
-    t.string   "number"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "diagram", :id => false, :force => true do |t|
+    t.string "id",    :limit => 15,  :null => false
+    t.string "pid",   :limit => 20,  :null => false
+    t.string "sgid",  :limit => 5,   :null => false
+    t.string "name",  :limit => 200, :null => false
+    t.string "image", :limit => 100
+  end
+
+  create_table "diagramparts", :id => false, :force => true do |t|
+    t.string  "id",          :limit => 20,                                                    :null => false
+    t.string  "did",         :limit => 15,                                                    :null => false
+    t.integer "dno"
+    t.string  "description", :limit => 200
+    t.string  "supplement",  :limit => 50
+    t.integer "qty"
+    t.date    "fromdate"
+    t.date    "uptodate"
+    t.string  "partno",      :limit => 11,                                                    :null => false
+    t.decimal "price",                      :precision => 19, :scale => 2
+    t.string  "notes",       :limit => 100
+    t.boolean "photo",                                                     :default => false
+    t.integer "sysid"
+  end
+
+  create_table "groups", :id => false, :force => true do |t|
+    t.integer "id",                  :null => false
+    t.string  "name", :limit => 100, :null => false
+  end
+
+  create_table "model", :id => false, :force => true do |t|
+    t.string "id",     :limit => 10, :null => false
+    t.string "sid",    :limit => 4,  :null => false
+    t.string "bid",    :limit => 3,  :null => false
+    t.string "name",   :limit => 40, :null => false
+    t.string "region", :limit => 3,  :null => false
   end
 
   create_table "order_lines", :force => true do |t|
@@ -68,6 +103,23 @@ ActiveRecord::Schema.define(:version => 20130909212224) do
     t.datetime "updated_at",          :null => false
   end
 
+  create_table "prodcode", :id => false, :force => true do |t|
+    t.string "id",          :limit => 10,  :null => false
+    t.string "mid",         :limit => 10,  :null => false
+    t.string "bid",         :limit => 3,   :null => false
+    t.string "sid",         :limit => 4,   :null => false
+    t.string "region",      :limit => 3,   :null => false
+    t.string "engine",      :limit => 10,  :null => false
+    t.string "steering",    :limit => 1
+    t.string "description", :limit => 200
+  end
+
+  create_table "prodcodedate", :id => false, :force => true do |t|
+    t.string "id",        :limit => 20, :null => false
+    t.string "pid",       :limit => 10, :null => false
+    t.date   "prodmonth",               :null => false
+  end
+
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "short_description"
@@ -78,6 +130,18 @@ ActiveRecord::Schema.define(:version => 20130909212224) do
     t.integer  "price"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "series", :id => false, :force => true do |t|
+    t.string "id",   :limit => 4,  :null => false
+    t.string "name", :limit => 30, :null => false
+  end
+
+  create_table "subgroups", :id => false, :force => true do |t|
+    t.string  "id",   :limit => 5,   :null => false
+    t.integer "gid"
+    t.integer "sid",                 :null => false
+    t.string  "name", :limit => 100, :null => false
   end
 
 end
