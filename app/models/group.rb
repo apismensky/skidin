@@ -1,3 +1,3 @@
 class Group < ActiveRecord::Base
-  attr_accessible :number, :description
+  attr_accessible :id, :name
 end
