@@ -2,6 +2,12 @@ Untitled::Application.routes.draw do
 
   get "groups/index"
   get "parts/index"
+  get "series/index"
+  get "bodies/index"
+  get "models/index"
+
+  match 'models/:sid/:bid' => 'models#find_by_sid_bid'
+
   match 'parts/:id' => 'parts#show'
   match 'find' => 'parts#search'
   match 'groups/:id' => 'groups#show'
