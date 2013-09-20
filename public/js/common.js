@@ -198,17 +198,21 @@ function addSelectWithOptions(container, id, options) {
 } 
 
 function addSelect(container, id, url) {
-	var select = new dijit.form.Select({
-		name: id,
-		options: [{ label: id, value: '', selected: true }]
-	}, container);
-        $.getJSON(url, 
-                function(json) {
+	var select = dijit.byId(id);
+    if(select) {
+      	select.removeOption(select.getOptions());
+   	} else {
+ 		select = new dijit.form.Select({
+			id: id,
+			options: []
+		}, container);
+ 	}
+    $.getJSON(url, function(json) {
 			for(idx in json) {
-                        	var obj = json[idx];
+                var obj = json[idx];
 				select.addOption( { label: obj['name'], value: obj['id'] } );
-                	}
-                });
+            }
+    });
 	return select;
 }
 

@@ -21,15 +21,43 @@ require(["dojo/dom",
 	"dijit/form/CheckBox"], 
 	function(dom, domConstruct) {
 	    // Call reusable function to add select drop down:
-            addSelect("Series", "Series", "http://www.skidin.com/series/index");
-            addSelect("Body", "Body", "http://www.skidin.com/bodies/index");
-            addSelect("Model", "Model", "http://www.skidin.com/models/index");
-	    addSelectWithOptions("Region", "Region", regions);
-	    addSelectWithOptions("Steering", "Steering", steering);
-            addSelect("Group", "Group", "http://www.skidin.com/groups/index");
+        var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index");
+        seriesSelect.on("change", function(){
+        	refreshModels();
+  		});
+        var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index");
+        bodySelect.on("change", function(){
+        	refreshModels();
+  		});
+        addSelect("ModelC", "Model", "http://www.skidin.com/models/index");
+	    addSelectWithOptions("RegionC", "Region", regions);
+	    addSelectWithOptions("SteeringC", "Steering", steering);
+        var groupSelect = addSelect("GroupC", "Group", "http://www.skidin.com/groups/index");
+        groupSelect.on("change", function(){
+        	refreshSubgroups();
+  		});
 	    // Add Search & Reset buttons:
-	    addSearchButton();    
+	    addSearchButton(); 
+	    refreshAll();   
 }); 
 
 
+function refreshAll() {
+	refreshSubgroups();
+	refreshModels();
+}
+
+function refreshSubgroups() {
+	var subgroupUrl = "http://www.skidin.com/subgroups/" + getText("Group");
+    var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl);
+}
+
+function refreshModels() {
+	var modelUrl = "http://www.skidin.com/models/" + getText("Series");
+    var body = getText("Body");
+    if(body) { 
+        modelUrl += "/" + body;
+    }
+    var modelSelect = addSelect("ModelC", "Model", modelUrl);
+}
 
