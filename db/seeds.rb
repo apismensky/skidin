@@ -17,8 +17,10 @@
 #	prod.save
 #
 #end
+# 'skidin_ddl_nofk.sql', 'insert_groups.sql', 'insert_subgroups.sql',
+#  'E81.sql', 'E60.sql', 'E60N.sql', 'E63N.sql', 'E81.sql', 'E87.sql', 'E90N.sql', 'F04.sql', 'F13.sql', 'RR3N.sql'
 
-files = ['skidin_ddl_nofk.sql', 'insert_groups.sql', 'insert_subgroups.sql', 'E81.sql', 'E60.sql', 'E60N.sql', 'E63N.sql', 'E81.sql', 'E87.sql', 'E90N.sql', 'F04.sql', 'F13.sql', 'RR3N.sql']
+files = ['E65.sql', 'E70.sql', 'E84.sql', 'E85.sql', 'F01.sql', 'F25.sql']
 connection = ActiveRecord::Base.connection
 
 files.each do |f|
