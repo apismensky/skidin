@@ -197,7 +197,7 @@ function addSelectWithOptions(container, id, options) {
 	return select;
 } 
 
-function addSelect(container, id, url) {
+function addSelect(container, id, url, callback) {
 	var select = dijit.byId(id);
     if(select) {
       	select.removeOption(select.getOptions());
@@ -210,7 +210,15 @@ function addSelect(container, id, url) {
     $.getJSON(url, function(json) {
 			for(idx in json) {
                 var obj = json[idx];
-				select.addOption( { label: obj['name'], value: obj['id'] } );
+                var objId = $.trim(obj['id']);
+                var objName = $.trim(obj['name']);
+                var option = { label: objName, value: objId };
+                if(!select.getOptions(objId)) {
+					select.addOption( option );
+				}
+            }
+            if(callback) {
+            	callback();
             }
     });
 	return select;

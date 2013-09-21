@@ -21,18 +21,27 @@ require(["dojo/dom",
 	"dijit/form/CheckBox"], 
 	function(dom, domConstruct) {
 	    // Call reusable function to add select drop down:
-        var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index");
+        var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index", refreshModels);
         seriesSelect.on("change", function(){
         	refreshModels();
   		});
-        var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index");
+        var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index", refreshModels);
         bodySelect.on("change", function(){
         	refreshModels();
   		});
-        addSelect("ModelC", "Model", "http://www.skidin.com/models/index");
-	    addSelectWithOptions("RegionC", "Region", regions);
-	    addSelectWithOptions("SteeringC", "Steering", steering);
-        var groupSelect = addSelect("GroupC", "Group", "http://www.skidin.com/groups/index");
+        var modelSelect = addSelect("ModelC", "Model", "http://www.skidin.com/models/index", refreshEngine);
+        modelSelect.on("change", function(){
+        	refreshEngine();
+  		});
+	    var regionSelect = addSelectWithOptions("RegionC", "Region", regions);
+	    regionSelect.on("change", function(){
+        	refreshEngine();
+  		});
+	    var steeringSelect = addSelectWithOptions("SteeringC", "Steering", steering);
+	    steeringSelect.on("change", function(){
+        	refreshEngine();
+  		});
+        var groupSelect = addSelect("GroupC", "Group", "http://www.skidin.com/groups/index", refreshSubgroups);
         groupSelect.on("change", function(){
         	refreshSubgroups();
   		});
@@ -42,26 +51,118 @@ require(["dojo/dom",
 }); 
 
 
+function addEngineSelect(url, callback) {
+	var select = dijit.byId("Engine");
+    if(select) {
+      	select.removeOption(select.getOptions());
+   	} else {
+ 		select = new dijit.form.Select({
+			id: "Engine"
+		}, "EngineC");
+ 	}
+    $.getJSON(url, function(json) {
+			for(idx in json) {
+                var obj = json[idx];
+                var engine = $.trim(obj['engine']);
+                var option =  { label: engine, value: engine };
+                if(!select.getOptions(engine)) {
+					select.addOption( option );
+				}
+            }
+            if(callback) {
+            	callback(url);
+            }
+    });
+	return select;
+}
+
 function refreshAll() {
 	refreshSubgroups();
 	refreshModels();
+	refreshEngine();
 }
 
-function refreshProdMonth() {
-	
+function refreshEngine() {
+	var sid = $.trim(getText("Series"));
+	var bid = $.trim(getText("Body"));
+	var mid = $.trim(getText("Model"));
+	var region = $.trim(getText("Region"));
+	var steering = $.trim(getText("Steering"));
+	if(sid && mid && bid && region && steering) {
+		var url = "http://www.skidin.com/prodcodes/"+mid+"/"+bid+"/"+sid+"/"+region+"/"+steering;
+		var select = addEngineSelect(url, refreshProdCode);
+		select.on("change", function(){
+        	refreshProdCode(url);
+  		});
+	}
+}
+
+function refreshProdCode(url) {
+	var engine = $.trim(getText("Engine"));
+	if(engine) {
+		url+="/"+engine;
+	}
+	$.getJSON(url, function(json) {
+		var html = "";
+		var prodCode = "";
+		for(idx in json) {
+            var obj = json[idx];	
+       		prodCode = obj['id']; 
+			var description = obj['description'];	
+			html = "<p><b>"+prodCode+":</b> "+description+"</p>";
+        }
+        $("#ProdCodeDiv").html(html);
+        refreshProdMonth(prodCode);
+    });
+}
+
+function refreshProdMonth(prodCode) {
+	var url = "http://www.skidin.com/prodcodedates/"+prodCode;
+	var select = dijit.byId("ProdMonth");
+    if(select) {
+      	select.removeOption(select.getOptions());
+   	} else {
+ 		select = new dijit.form.Select({
+			id: "ProdMonth"
+		}, "ProdMonthC");
+ 	}
+    $.getJSON(url, function(json) {
+			for(idx in json) {
+                var obj = json[idx];
+                var prodmonth = $.trim(obj['prodmonth']);
+                var option = { label: prodmonth, value: prodmonth };
+                if(!select.getOptions(prodmonth)) {
+					select.addOption(option);
+				}
+            }
+    });
+	return select;
 }
 
 function refreshSubgroups() {
-	var subgroupUrl = "http://www.skidin.com/subgroups/" + getText("Group");
-    var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl);
+	var group = $.trim(getText("Group"))
+	if(group) {
+		var subgroupUrl = "http://www.skidin.com/subgroups/"+group;
+    	var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl);
+    }
 }
 
 function refreshModels() {
-	var modelUrl = "http://www.skidin.com/models/" + getText("Series");
-    var body = getText("Body");
-    if(body) { 
-        modelUrl += "/" + body;
-    }
-    var modelSelect = addSelect("ModelC", "Model", modelUrl);
+	var series = $.trim(getText("Series"));
+	var modelUrl = "http://www.skidin.com/models/"
+	if(series) {
+		modelUrl += series;
+		var body = $.trim(getText("Body"));
+    	if(body) { 
+        	modelUrl += "/" + body;
+    	}
+    } else {
+		modelUrl += "index";
+	}
+    
+    var modelSelect = addSelect("ModelC", "Model", modelUrl, refreshEngine);
 }
+
+
+
 
