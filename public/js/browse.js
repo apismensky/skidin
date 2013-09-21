@@ -1,6 +1,8 @@
 var regions = [{label: 'USA', value: 'US', selected: true}, {label: 'Europe', value: 'ECE'}];
 var steering = [{label: 'Left', value: 'L', selected: true}, {label: 'Right', value: 'R'}];
 
+var currentProdCode = "";
+
 // Init Daily Summary Form:
 require(["dojo/dom", 
 	"dojo/dom-construct",
@@ -104,20 +106,19 @@ function refreshProdCode(url) {
 	}
 	$.getJSON(url, function(json) {
 		var html = "";
-		var prodCode = "";
 		for(idx in json) {
             var obj = json[idx];	
-       		prodCode = obj['id']; 
+       		currentProdCode = $.trim(obj['id']); 
 			var description = obj['description'];	
-			html = "<p><b>"+prodCode+":</b> "+description+"</p>";
+			html = "<p><b>"+currentProdCode+"</b>: "+description+"</p>";
         }
         $("#ProdCodeDiv").html(html);
-        refreshProdMonth(prodCode);
+        refreshProdMonth();
     });
 }
 
-function refreshProdMonth(prodCode) {
-	var url = "http://www.skidin.com/prodcodedates/"+prodCode;
+function refreshProdMonth() {
+	var url = "http://www.skidin.com/prodcodedates/"+currentProdCode;
 	var select = dijit.byId("ProdMonth");
     if(select) {
       	select.removeOption(select.getOptions());
@@ -125,8 +126,12 @@ function refreshProdMonth(prodCode) {
  		select = new dijit.form.Select({
 			id: "ProdMonth"
 		}, "ProdMonthC");
+		select.on("change", function(){
+        	refreshDiagrams;
+  		});
  	}
-    $.getJSON(url, function(json) {
+ 	if(currentProdCode) {
+    	$.getJSON(url, function(json) {
 			for(idx in json) {
                 var obj = json[idx];
                 var prodmonth = $.trim(obj['prodmonth']);
@@ -135,15 +140,35 @@ function refreshProdMonth(prodCode) {
 					select.addOption(option);
 				}
             }
-    });
+            refreshDiagrams();
+    	});
+	}
 	return select;
+}
+
+function refreshDiagrams() {
+	var pid = $.trim(currentProdCode);
+	var sgid = $.trim(getText("Subgroup"));
+	if(pid && sgid) {
+		var url = "http://www.skidin.com/diagrams/"+pid+"/"+sgid;
+		$("#ResultDiv").html(url);
+		$.getJSON(url, function(json) {
+			for(idx in json) {
+                var obj = json[idx];
+                var did = $.trim(obj['id']);
+                var dname = $.trim(obj['name']);
+                var dimage = $.trim(obj['image']);
+                $("#ResultDiv").html("<p>"+did+": "+dname+", "+dimage+"</p>");
+            }
+    	});
+	}
 }
 
 function refreshSubgroups() {
 	var group = $.trim(getText("Group"))
 	if(group) {
 		var subgroupUrl = "http://www.skidin.com/subgroups/"+group;
-    	var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl);
+    	var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl, refreshDiagrams);
     }
 }
 
