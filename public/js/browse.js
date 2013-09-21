@@ -47,6 +47,10 @@ function refreshAll() {
 	refreshModels();
 }
 
+function refreshProdMonth() {
+	
+}
+
 function refreshSubgroups() {
 	var subgroupUrl = "http://www.skidin.com/subgroups/" + getText("Group");
     var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl);

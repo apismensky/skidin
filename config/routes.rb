@@ -8,7 +8,7 @@ Untitled::Application.routes.draw do
 
   match 'models/:sid/:bid' => 'models#find_by_sid_bid'
   match 'models/:sid' => 'models#find_by_sid'
-  match 'prodcodes/:mid/:bid/:sid/:region' => 'prodcodes#find_by_sid_bid_mid_reg'
+  match 'prodcodes/:mid/:bid/:sid/:region/:steering' => 'prodcodes#find_by_sid_bid_mid_reg_ste'
   match 'prodcodedates/:pid' => 'prodcodedates#find_by_pid'
   match 'subgroups/:gid/:sid' => 'subgroups#find_by_gid_sid'
   match 'subgroups/:gid' => 'subgroups#find_by_gid'
