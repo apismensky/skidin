@@ -29,7 +29,7 @@ Untitled::Application.routes.draw do
   match 'cart' => 'cart#create', :via => :post, :as => 'cart'
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
-  match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
+  #match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
 
   match 'tiresearch' => 'tire#search'
 
