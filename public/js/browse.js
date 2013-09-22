@@ -148,18 +148,25 @@ function refreshProdMonth() {
 
 function refreshDiagrams() {
 	var pid = $.trim(currentProdCode);
-	var sgid = $.trim(getText("Subgroup"));
-	if(pid && sgid) {
-		var url = "http://www.skidin.com/diagrams/"+pid+"/"+sgid;
-		$("#ResultDiv").html(url);
+	var subgroup = $.trim(getText("Subgroup"));
+	var prodDate = $.trim(getText("ProdMonth"));
+	if(pid && subgroup && prodDate) {
+		var prodyear = prodDate.substring(0,4);
+		var prodmonth = prodDate.substring(5,7);
+		var pmid = pid+"-"+prodyear+prodmonth+"00";
+		var url = "http://www.skidin.com/diagrams/"+pmid+"/"+subgroup;
+		$("#ResultDiv").html("Loading : "+url+" .. ");
 		$.getJSON(url, function(json) {
+			var resultHtml = "<table border='0' width='100%'>";
 			for(idx in json) {
                 var obj = json[idx];
                 var did = $.trim(obj['id']);
                 var dname = $.trim(obj['name']);
                 var dimage = $.trim(obj['image']);
-                $("#ResultDiv").html("<p>"+did+": "+dname+", "+dimage+"</p>");
+                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
             }
+            resultHtml+="</table>";
+            $("#ResultDiv").html(resultHtml);
     	});
 	}
 }
@@ -169,6 +176,9 @@ function refreshSubgroups() {
 	if(group) {
 		var subgroupUrl = "http://www.skidin.com/subgroups/"+group;
     	var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl, refreshDiagrams);
+    	subgroupSelect.on("change", function(){
+        	refreshDiagrams();
+  		});
     }
 }
 
