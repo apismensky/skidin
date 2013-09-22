@@ -165,7 +165,7 @@ function refreshDiagrams() {
                 var dname = $.trim(obj['name']);
                 var dimage = $.trim(obj['image']);
                 var diagramid = pid+"-"+did;
-                var diagrams.put(diagramid);
+                diagrams.push(diagramid);
                 resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+diagramid+"'>"+diagramid+"</div></td></tr>";
             }
             resultHtml+="</table>";
@@ -176,7 +176,9 @@ function refreshDiagrams() {
 }
 
 function refreshDiagramParts(diagrams) {
-
+	for(var i=0;i<diagrams.length;i++) {
+		$("#"+diagrams[i]).html("Loading .. "+diagrams[i]);
+	}
 }
 
 function refreshSubgroups() {

@@ -20,9 +20,9 @@ Untitled::Application.routes.draw do
 
   match 'groups/:id' => 'groups#show'
 
-  match 'loadparts/:did' => 'diagramparts#find_by_did'
+  match 'diagramparts/:did' => 'diagramparts#find_by_did'
 
-  resources :diagramparts, only: [:index, :show]
+  #resources :diagramparts, only: [:index, :show]
 
   resources :cart, only: [:index]
   match 'cart' => 'cart#update', :via => :put, :as => 'cart_update'
