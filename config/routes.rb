@@ -20,7 +20,7 @@ Untitled::Application.routes.draw do
 
   match 'groups/:id' => 'groups#show'
 
-  match 'diagramparts/:did' => 'diagramparts#find_by_did'
+  match 'loadparts/:did' => 'diagramparts#find_by_did'
 
   resources :diagramparts, only: [:index, :show]
 

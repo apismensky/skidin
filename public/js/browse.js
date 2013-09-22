@@ -157,18 +157,26 @@ function refreshDiagrams() {
 		var url = "http://www.skidin.com/diagrams/"+pmid+"/"+subgroup;
 		$("#ResultDiv").html("Loading : "+url+" .. ");
 		$.getJSON(url, function(json) {
+			var diagrams = new Array();
 			var resultHtml = "<table border='0' width='100%'>";
 			for(idx in json) {
                 var obj = json[idx];
                 var did = $.trim(obj['id']);
                 var dname = $.trim(obj['name']);
                 var dimage = $.trim(obj['image']);
-                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
+                var diagramid = pid+"-"+did;
+                var diagrams.put(diagramid);
+                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+diagramid+"'>"+diagramid+"</div></td></tr>";
             }
             resultHtml+="</table>";
             $("#ResultDiv").html(resultHtml);
+            refreshDiagramParts(diagrams);
     	});
 	}
+}
+
+function refreshDiagramParts(diagrams) {
+
 }
 
 function refreshSubgroups() {

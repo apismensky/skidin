@@ -1,7 +1,6 @@
 // Common JavaScript code
 
 var evalStr = ""; 
-var searchBtnMap = new Map();
 var maxJsonRowsDisplayed = 1;
 var emptyLabel = "&nbsp;&nbsp;&nbsp;&nbsp;";
 
@@ -14,7 +13,6 @@ var grid = null;
 function loadData(url) {
 	if(!url) { url = getDataUrl(); }
 	$.getJSON(url, function(json) {
-		var totalMap = new Map(); 
 		var myStore = new dojo.store.Memory();		
 		// Construct grid header
 		var layout = [[
