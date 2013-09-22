@@ -10,7 +10,7 @@ class DiagrampartsController < ApplicationController
 #  end
 
   def find_by_did
-    @parts = Diagramparts.where("did='#{params['did']}'")
+    @parts = Diagrampart.where("did='#{params['did']}'")
     render json: @parts
   end
 
