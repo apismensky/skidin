@@ -14,6 +14,11 @@ class DiagrampartsController < ApplicationController
     render json: @parts
   end
 
+    def match_by_did
+    @parts = Diagrampart.where("did like '#{params['did']}%'")
+    render json: @parts
+  end
+
 #  def order
 #    cart = Cart.first
 #    @success = true

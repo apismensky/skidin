@@ -21,6 +21,7 @@ Untitled::Application.routes.draw do
   match 'groups/:id' => 'groups#show'
 
   match 'diagramparts/:did' => 'diagramparts#find_by_did'
+  match 'diagramparts/match/:did' => 'diagramparts#match_by_did'
 
   #resources :diagramparts, only: [:index, :show]
 
