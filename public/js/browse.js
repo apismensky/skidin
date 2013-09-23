@@ -25,6 +25,7 @@ require(["dojo/dom",
 	    // Call reusable function to add select drop down:
         var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index", refreshModels);
         seriesSelect.on("change", function(){
+        	refreshBodies();
         	refreshModels();
   		});
         var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index", refreshModels);
@@ -80,6 +81,7 @@ function addEngineSelect(url, callback) {
 
 function refreshAll() {
 	refreshSubgroups();
+	refreshBodies();
 	refreshModels();
 	refreshEngine();
 }
@@ -164,9 +166,8 @@ function refreshDiagrams() {
                 var did = $.trim(obj['id']);
                 var dname = $.trim(obj['name']);
                 var dimage = $.trim(obj['image']);
-                var diagramid = pid+"-"+did;
-                diagrams.push(diagramid);
-                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+diagramid+"'>"+diagramid+"</div></td></tr>";
+                diagrams.push(did);
+                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
             }
             resultHtml+="</table>";
             $("#ResultDiv").html(resultHtml);
@@ -208,6 +209,26 @@ function refreshModels() {
     var modelSelect = addSelect("ModelC", "Model", modelUrl, refreshEngine);
 }
 
-
+function refreshBodies() {
+	var series = $.trim(getText("Series"));
+	var modelUrl = "http://www.skidin.com/models/"
+	if(series) {
+		modelUrl += series;
+	} else {
+		modelUrl += "index";
+	}
+	var select = dijit.byId("Body");
+    select.removeOption(select.getOptions());
+	$.getJSON(modelUrl, function(json) {
+		for(idx in json) {
+            var obj = json[idx];
+            var body = $.trim(obj['bid']);
+            var option = { label: body, value: body };
+            if(!select.getOptions(body)) {
+				select.addOption(option);
+			}
+		}
+    });
+}
 
 
