@@ -178,7 +178,10 @@ function refreshDiagrams() {
 
 function refreshDiagramParts(diagrams) {
 	for(var i=0;i<diagrams.length;i++) {
-		$("#"+diagrams[i]).html("Loading .. "+diagrams[i]);
+		var did = diagrams[i];
+		$("#"+did).html("Loading .. "+did);
+		var url = "http://www.skidin.com/diagramparts/"+did;
+		loadDiagramPartsData(did, url)
 	}
 }
 

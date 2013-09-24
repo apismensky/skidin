@@ -7,7 +7,64 @@ var emptyLabel = "&nbsp;&nbsp;&nbsp;&nbsp;";
 //Max Height of all select boxes except office select (defined in office-select.js)
 var maxSelectHeight = 200;
 
-var grid = null;
+
+function loadDiagramPartsData(divid, url) {
+	var datacount = 0;
+	$.getJSON(url, function(json) {
+		var myStore = new dojo.store.Memory();		
+		// Construct grid header
+		/* 
+		"description":"Car Infotainment computer",
+		"did":"VZ92-65_1916   ",
+		"dno":1,
+		"fromdate":"2008-09-01",
+		"id":"VZ92-65_1916-65129273172      ",
+		"notes":"ENDED",
+		"partno":"65129273172",
+		"photo":false,
+		"price":"0.0",
+		"qty":1,
+		"supplement":"KOREA",
+		"uptodate":"2012-03-01"
+		*/
+		var layout = [[
+					{name:"Part #", field:"partno", width:"90px" },
+					{name:"Description", field:"description", width:"180px"},
+					{name:"Dno", field:"dno", width:"40px"},
+					{name:"Qty", field:"qty", width:"40px"},
+					{name:"Price", field:"price", width:"60px"},
+					{name:"From Date", field:"fromdate", width:"80px"},
+					{name:"Upto Date", field:"uptodate", width:"80px"},
+					{name:"Supplement", field:"supplement", width:"90px"},
+					{name:"Notes", field:"notes", width:"60px"}
+					]];
+		for(key in json) {
+  			var obj = json[key];
+  			var rowEval = "myStore.add({"; 
+  			var i = 0;
+  			for(name in obj) {
+  				var value = obj[name];
+  				if(name == "") { name = "N"; }
+				rowEval += "\"" + name + "\": \"" + value + "\", ";
+			}
+			rowEval += "\"X\": \"\" });";
+			eval(rowEval);
+			datacount++;
+  		}
+  		// Create grid#:	
+  		if(datacount > 0) {
+  			var dataStore  = dojo.data.ObjectStore({objectStore: myStore});
+  			var grid = new dojox.grid.DataGrid({
+ 				id: "Grid-"+divid,
+				store: dataStore,
+				structure: layout
+			}, divid); 
+			grid.startup();
+		} else {
+			$("$"+divid).html("No parts available");
+		}
+  	});	
+}
 
 // Load JSON data and display in a new tab from specified URL or from a form:
 function loadData(url) {
