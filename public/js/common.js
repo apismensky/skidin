@@ -61,7 +61,7 @@ function loadDiagramPartsData(divid, url) {
 			}, divid); 
 			grid.startup();
 		} else {
-			$("$"+divid).html("No parts available");
+			$("#"+divid).html("No parts available");
 		}
   	});	
 }
