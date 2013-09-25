@@ -167,7 +167,7 @@ function refreshDiagrams() {
                 var dname = $.trim(obj['name']);
                 var dimage = $.trim(obj['image']);
                 diagrams.push(did);
-                resultHtml += "<tr><td><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
+                resultHtml += "<tr><td valign='top' width='50%'><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top' width='50%'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
             }
             resultHtml+="</table>";
             $("#ResultDiv").html(resultHtml);
