@@ -20,7 +20,7 @@ var gridLayout = [[
 ]];
 
 function formatPartno(partno) {
-	return "<a href='javascript:showPartDetails("+partno+")'>"+partno+"</a>";
+	return "<a href='javascript:showPartDetails(\""+partno+"\")'>"+partno+"</a>";
 }
 
 function showPartDetails(partno) {
@@ -29,8 +29,8 @@ function showPartDetails(partno) {
         style: "width: 300px"
     });
     partDialog.show();
-    var url = "http://www.skidin.com/getpart/0"+partno;
-    var html = "<img src='http://realoem.com/bmw/photos/0"+partno+".jpg' onerror=\"this.src='img/AutoPart1.jpg'\" width=100 height=100><br/>";
+    var url = "http://www.skidin.com/getpart/"+partno;
+    var html = "<img src='http://realoem.com/bmw/photos/"+partno+".jpg' onerror=\"this.src='img/AutoPart1.jpg'\" width=100 height=100><br/>";
     partDialog.set("content", html);
     $.getJSON(url, function(json) {	
 		for(key in json) {
