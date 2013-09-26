@@ -26,22 +26,26 @@ function formatPartno(partno) {
 function showPartDetails(partno) {
 	var partDialog = new dijit.Dialog({
         title: "Part #"+partno,
-        style: "width: 500px, height: 500px"
+        style: "width: 300px"
     });
     partDialog.show();
-    var url = "http://www.skidin.com/getpart/"+partno;
-    var html = "<img src='http://realoem.com/bmw/photos/"+partno+".jpg' onerror=\"this.src='img/AutoPart1.jpg'\" width=100 height=100><br/>";
+    var url = "http://www.skidin.com/getpart/0"+partno;
+    var html = "<img src='http://realoem.com/bmw/photos/0"+partno+".jpg' onerror=\"this.src='img/AutoPart1.jpg'\" width=100 height=100><br/>";
+    partDialog.set("content", html);
     $.getJSON(url, function(json) {	
 		for(key in json) {
   			var obj = json[key];
-  			var i = 0;
+  			html+="<table width=300 border=0 align=left>";
   			for(name in obj) {
   				var value = obj[name];
-  				html += name + ": " + value + "<br/>";
+  				html += "<tr><td align=left><b>"+name + ":</b></td><td align=left>" + value + "</td></tr>";
 			}
+			html+="</table><br/><input type='button' value='Add to cart [placeholder]'>";
+			break;
   		}
+  		partDialog.set("content", html)
   	});	
-    partDialog.set("content", html);
+    
 }
 
 function loadDiagramPartsData(divid, url) {

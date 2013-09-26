@@ -1,4 +1,4 @@
-var regions = [{label: 'USA', value: 'US', selected: true}, {label: 'Europe', value: 'ECE'}];
+var regions = [{label: 'Europe', value: 'ECE', selected: true}, {label: 'USA', value: 'US'}, ];
 var steering = [{label: 'Left', value: 'L', selected: true}, {label: 'Right', value: 'R'}];
 
 var currentProdCode = "";
