@@ -20,7 +20,7 @@ Untitled::Application.routes.draw do
 
   match 'groups/:id' => 'groups#show'
 
-  match 'getpart/:id' => 'diagramparts#find_by_id'
+  match 'getpart/:partno' => 'diagramparts#find_by_partno'
   match 'diagramparts/:did' => 'diagramparts#find_by_did'
   match 'diagramparts/match/:did' => 'diagramparts#match_by_did'
 

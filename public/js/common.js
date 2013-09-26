@@ -29,7 +29,19 @@ function showPartDetails(partno) {
         style: "width: 500px, height: 500px"
     });
     partDialog.show();
-    partDialog.set("content", "<img src='http://realoem.com/bmw/photos/"+partno+".jpg' width=500>");
+    var url = "http://www.skidin.com/getpart/"+partno;
+    var html = "<img src='http://realoem.com/bmw/photos/"+partno+".jpg' onerror=\"this.src='img/AutoPart1.jpg'\" width=100 height=100><br/>";
+    $.getJSON(url, function(json) {	
+		for(key in json) {
+  			var obj = json[key];
+  			var i = 0;
+  			for(name in obj) {
+  				var value = obj[name];
+  				html += name + ": " + value + "<br/>";
+			}
+  		}
+  	});	
+    partDialog.set("content", html);
 }
 
 function loadDiagramPartsData(divid, url) {
