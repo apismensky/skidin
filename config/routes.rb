@@ -24,14 +24,15 @@ Untitled::Application.routes.draw do
   match 'diagramparts/:did' => 'diagramparts#find_by_did'
   match 'diagramparts/match/:did' => 'diagramparts#match_by_did'
 
-  #resources :diagramparts, only: [:index, :show]
+  match 'diagramparts/show/:id' => 'diagramparts#show'
+  resources :diagramparts, only: [:index]
 
   resources :cart, only: [:index]
   match 'cart' => 'cart#update', :via => :put, :as => 'cart_update'
   match 'cart' => 'cart#create', :via => :post, :as => 'cart'
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
-  #match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
+  match 'diagramparts/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
 
   match 'tiresearch' => 'tire#search'
 

@@ -5,7 +5,7 @@
   ul.products-grid
     - @products.each do |product|
       li.product.grid-item
-        = link_to image_tag('AutoPart5.jpg', :alt=> product.description), "/diagramparts/#{product.sysid}", class: 'product-thumb'
+        = link_to image_tag('AutoPart5.jpg', :alt=> product.description), "/diagramparts/show/#{product.sysid}", class: 'product-thumb'
         header.grid-item-details
           p.product-name = product.description
           p.product-points #{product.price} usd
