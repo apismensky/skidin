@@ -7,7 +7,7 @@
           - for item in @cart.cart_items
             - if item.diagrampart
               li.product.product-list-item
-                = link_to image_tag('AutoPart5.jpg'), "/diagramparts/#{item.diagrampart.sysid}", class: 'product-thumb'
+                = link_to image_tag('AutoPart5.jpg'), "/diagramparts/show/#{item.diagrampart.sysid}", class: 'product-thumb'
                 header.product-list-item-details
                   .product-item-actions
                     ' Qty. #{ number_field_tag 'quantity[]', item.quantity, :in => 1...10, :size => 1, class: 'quantity-input' }
@@ -16,9 +16,9 @@
                   p.product-name = item.diagrampart.description
                   p.product-points #{item.diagrampart.price} usd
         = submit_tag "Update", class: 'oc-btn'
-        = link_to "Continue shopping", "/diagramparts", class: 'oc-btn oc-btn-light'
+        = link_to "Continue shopping", "/browse.html", class: 'oc-btn oc-btn-light'
     .cart-details
-      = form_tag '/diagramparts/order' do
+      = form_tag '/order' do
           
         .cart-summary
           h2.cart-title Order Summary

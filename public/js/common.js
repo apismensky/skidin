@@ -8,8 +8,9 @@ var emptyLabel = "&nbsp;&nbsp;&nbsp;&nbsp;";
 var maxSelectHeight = 200;
 var gridCounter = 0;
 var gridLayout = [[
+    {name:"id", field:"sysid", formatter: formatSysid},
 		{name:"Dno", field:"dno", width:"35px"},
-		{name:"Part #", field:"partno", width:"90px", formatter:formatPartno },
+		{name:"Part #", field:"partno", width:"90px" },
 		{name:"Description", field:"description", width:"180px"},
 		{name:"Qty", field:"qty", width:"35px"},
 		{name:"Price", field:"price", width:"50px"},
@@ -21,6 +22,10 @@ var gridLayout = [[
 
 function formatPartno(partno) {
 	return "<a href='javascript:showPartDetails(\""+partno+"\")'>"+partno+"</a>";
+}
+
+function formatSysid(sysid) {
+	return "<a href='/diagramparts/show/" + sysid + "'>" + sysid + "</a>";
 }
 
 function showPartDetails(partno) {
