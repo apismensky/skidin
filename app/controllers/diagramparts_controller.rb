@@ -9,6 +9,11 @@ class DiagrampartsController < ApplicationController
 #    @product = Diagrampart.find_by_sysid(params[:id])
 #  end
 
+  def find_by_id
+    @parts = Diagrampart.where("id='#{params['id']}'")
+    render json: @parts
+  end
+
   def find_by_did
     @parts = Diagrampart.where("did='#{params['did']}'")
     render json: @parts

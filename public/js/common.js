@@ -9,7 +9,7 @@ var maxSelectHeight = 200;
 var gridCounter = 0;
 var gridLayout = [[
 		{name:"Dno", field:"dno", width:"35px"},
-		{name:"Part #", field:"partno", width:"90px" },
+		{name:"Part #", field:"partno", width:"90px", formatter:formatPartno },
 		{name:"Description", field:"description", width:"180px"},
 		{name:"Qty", field:"qty", width:"35px"},
 		{name:"Price", field:"price", width:"50px"},
@@ -19,6 +19,18 @@ var gridLayout = [[
 		{name:"Notes", field:"notes", width:"60px"}
 ]];
 
+function formatPartno(partno) {
+	return "<a href='javascript:showPartDetails("+partno+")'>"+partno+"</a>";
+}
+
+function showPartDetails(partno) {
+	var partDialog = new dijit.Dialog({
+        title: "Part #"+partno,
+        style: "width: 500px, height: 500px"
+    });
+    partDialog.show();
+    partDialog.set("content", "<img src='http://realoem.com/bmw/photos/"+partno+".jpg' width=500>");
+}
 
 function loadDiagramPartsData(divid, url) {
 	var datacount = 0;
