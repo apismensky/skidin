@@ -7,7 +7,7 @@
           - for item in @cart.cart_items
             - if item.diagrampart
               li.product.product-list-item
-                = link_to image_tag('AutoPart5.jpg'), "/diagramparts/#{item.diagrampart.sysid}", class: 'product-thumb'
+                = link_to image_tag('AutoPart5.jpg'), "/diagramparts/show/#{item.diagrampart.sysid}", class: 'product-thumb'
                 header.product-list-item-details
                   .product-item-actions
                     ' Qty. #{ number_field_tag 'quantity[]', item.quantity, :in => 1...10, :size => 1, class: 'quantity-input' }
