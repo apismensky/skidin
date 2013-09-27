@@ -70,10 +70,6 @@ a.carousel-control:hover {
 /*************************************************************
                              header
 **************************************************************/
-.site-header {
-  background-image: url(../img/noise-bg.png);
-width: 100%;
-}
 
 /* logo - icon is from fontawesome font */
 .site-title {
