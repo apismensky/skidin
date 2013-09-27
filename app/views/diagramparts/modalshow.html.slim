@@ -9,7 +9,7 @@
 
     br
 
-    = form_tag cart_path do
+    = form_tag "/modalcart" do
       = hidden_field_tag 'product_id', @product.sysid
       = submit_tag "Add to Cart", class: 'oc-btn'
 

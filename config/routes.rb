@@ -31,6 +31,9 @@ Untitled::Application.routes.draw do
   resources :cart, only: [:index]
   match 'cart' => 'cart#update', :via => :put, :as => 'cart_update'
   match 'cart' => 'cart#create', :via => :post, :as => 'cart'
+  match 'modalcart' => 'cart#modalcreate', :via => :post
+  match 'cart/ok' => 'cart#ok', :via => :get
+
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
   match '/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
