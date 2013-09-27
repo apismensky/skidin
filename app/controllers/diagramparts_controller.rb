@@ -9,6 +9,10 @@ class DiagrampartsController < ApplicationController
     @product = Diagrampart.find_by_sysid(params[:id])
   end
 
+  def modalshow
+      show
+  end
+
   def find_by_partno
     @parts = Diagrampart.where("partno='#{params['partno']}'")
     render json: @parts
