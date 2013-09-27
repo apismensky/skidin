@@ -25,6 +25,7 @@ Untitled::Application.routes.draw do
   match 'diagramparts/match/:did' => 'diagramparts#match_by_did'
 
   match 'diagramparts/show/:id' => 'diagramparts#show'
+  match 'diagramparts/modalshow/:id' => 'diagramparts#modalshow'
   resources :diagramparts, only: [:index]
 
   resources :cart, only: [:index]
