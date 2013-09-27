@@ -3,6 +3,16 @@ var steering = [{label: 'Left', value: 'L', selected: true}, {label: 'Right', va
 
 var currentProdCode = "";
 
+var opMap = new Map();
+opMap.put("ENGINE", "");
+opMap.put("PRODCODE", "");
+opMap.put("MODEL", "");
+opMap.put("BODY", "");
+opMap.put("PRODMONTH", "");
+opMap.put("DIAGRAM", "");
+opMap.put("DIAGRAMPARTS", "");
+opMap.put("SUBGROUP", "");
+
 // Init Daily Summary Form:
 require(["dojo/dom", 
 	"dojo/dom-construct",
@@ -96,10 +106,13 @@ function refreshEngine() {
 	var steering = $.trim(getText("Steering"));
 	if(sid && mid && bid && region && steering) {
 		var url = "http://www.skidin.com/prodcodes/"+mid+"/"+bid+"/"+sid+"/"+region+"/"+steering;
-		var select = addEngineSelect(url, refreshProdCode);
-		select.on("change", function(){
-        	refreshProdCode(url);
-  		});
+		if(opMap.get("ENGINE")!=url) {
+			opMap.put("ENGINE", url);
+			var select = addEngineSelect(url, refreshProdCode);
+			select.on("change", function(){
+        		refreshProdCode(url);
+  			});
+  		} 
 	}
 }
 
@@ -108,44 +121,50 @@ function refreshProdCode(url) {
 	if(engine) {
 		url+="/"+engine;
 	}
-	$.getJSON(url, function(json) {
-		var html = "";
-		for(idx in json) {
-            var obj = json[idx];	
-       		currentProdCode = $.trim(obj['id']); 
-			var description = obj['description'];	
-			html = "<h3 align='left'>"+currentProdCode+": "+description+"</h3>";
-        }
-        $("#ProdCodeDiv").html(html);
-        refreshProdMonth();
-    });
+	if(opMap.get("PRODCODE")!=url) {
+		opMap.put("PRODCODE", url);
+		$.getJSON(url, function(json) {
+			var html = "";
+			for(idx in json) {
+        	    var obj = json[idx];	
+       			currentProdCode = $.trim(obj['id']); 
+				var description = obj['description'];	
+				html = "<h3 align='left'>"+currentProdCode+": "+description+"</h3>";
+        	}
+        	$("#ProdCodeDiv").html(html);
+        	refreshProdMonth();
+    	});
+	}
 }
 
 function refreshProdMonth() {
 	var url = "http://www.skidin.com/prodcodedates/"+currentProdCode;
 	var select = dijit.byId("ProdMonth");
-    if(select) {
-      	select.removeOption(select.getOptions());
-   	} else {
- 		select = new dijit.form.Select({
-			id: "ProdMonth"
-		}, "ProdMonthC");
-		select.on("change", function(){
-        	refreshDiagrams;
-  		});
- 	}
- 	if(currentProdCode) {
-    	$.getJSON(url, function(json) {
-			for(idx in json) {
-                var obj = json[idx];
-                var prodmonth = $.trim(obj['prodmonth']);
-                var option = { label: prodmonth, value: prodmonth };
-                if(!select.getOptions(prodmonth)) {
-					select.addOption(option);
-				}
-            }
-            refreshDiagrams();
-    	});
+	if(opMap.get("PRODMONTH")!=url) {
+		opMap.put("PRODMONTH", url);
+    	if(select) {
+    	  	select.removeOption(select.getOptions());
+   		} else {
+ 			select = new dijit.form.Select({
+				id: "ProdMonth"
+			}, "ProdMonthC");
+			select.on("change", function(){
+    	    	refreshDiagrams;
+  			});
+ 		}
+ 		if(currentProdCode) {
+    		$.getJSON(url, function(json) {
+				for(idx in json) {
+    	            var obj = json[idx];
+   	            	var prodmonth = $.trim(obj['prodmonth']);
+                	var option = { label: prodmonth, value: prodmonth };
+                	if(!select.getOptions(prodmonth)) {
+						select.addOption(option);
+					}
+            	}
+            	refreshDiagrams();
+    		});
+		}
 	}
 	return select;
 }
@@ -159,42 +178,49 @@ function refreshDiagrams() {
 		var prodmonth = prodDate.substring(5,7);
 		var pmid = pid+"-"+prodyear+prodmonth+"00";
 		var url = "http://www.skidin.com/diagrams/"+pmid+"/"+subgroup;
-		$("#ResultDiv").html("Loading : "+url+" .. ");
-		$.getJSON(url, function(json) {
-			var diagrams = new Array();
-			var resultHtml = "<table border='0' width='100%'>";
-			for(idx in json) {
-                var obj = json[idx];
-                var did = $.trim(obj['id']);
-                var dname = $.trim(obj['name']);
-                var dimage = $.trim(obj['image']);
-                diagrams.push(did);
-                resultHtml += "<tr><td valign='top' width='50%'><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top' width='50%'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
-            }
-            resultHtml+="</table>";
-            $("#ResultDiv").html(resultHtml);
-            refreshDiagramParts(diagrams);
-    	});
+		if(opMap.get("DIAGRAM")!=url) {
+			opMap.put("DIAGRAM", url);
+			$.getJSON(url, function(json) {
+				var diagrams = new Array();
+				var resultHtml = "<table border='0' width='100%'>";
+				for(idx in json) {
+        	        var obj = json[idx];
+        	        var did = $.trim(obj['id']);
+        	        var dname = $.trim(obj['name']);
+        	        var dimage = $.trim(obj['image']);
+       	        	diagrams.push(did);
+                	resultHtml += "<tr><td valign='top' width='50%'><img src='http://images.skidin.com/"+dimage+"'></td><td align='left' valign='top' width='50%'><h2>"+dname+"</h2><br/><div id='"+did+"'>"+did+"</div></td></tr>";
+            	}
+            	resultHtml+="</table>";
+            	$("#ResultDiv").html(resultHtml);
+            	refreshDiagramParts(diagrams);
+    		});
+		}
 	}
 }
 
 function refreshDiagramParts(diagrams) {
 	for(var i=0;i<diagrams.length;i++) {
 		var did = diagrams[i];
-		$("#"+did).html("Loading .. "+did);
 		var url = "http://www.skidin.com/diagramparts/"+did;
-		loadDiagramPartsData(did, url)
+		if(opMap.get("DIAGRAMPARTS")!=url) {
+			opMap.put("DIAGRAMPARTS", url);
+			loadDiagramPartsData(did, url);
+		}
 	}
 }
 
 function refreshSubgroups() {
 	var group = $.trim(getText("Group"))
 	if(group) {
-		var subgroupUrl = "http://www.skidin.com/subgroups/"+group;
-    	var subgroupSelect = addSelect("SubgroupC", "Subgroup", subgroupUrl, refreshDiagrams);
-    	subgroupSelect.on("change", function(){
-        	refreshDiagrams();
-  		});
+		var url = "http://www.skidin.com/subgroups/"+group;
+		if(opMap.get("SUBGROUP")!=url) {
+			opMap.put("SUBGROUP", url);
+    		var subgroupSelect = addSelect("SubgroupC", "Subgroup", url, refreshDiagrams);
+    		subgroupSelect.on("change", function(){
+        		refreshDiagrams();
+  			});
+    	}
     }
 }
 
@@ -210,30 +236,35 @@ function refreshModels() {
     } else {
 		modelUrl += "index";
 	}
-    
-    var modelSelect = addSelect("ModelC", "Model", modelUrl, refreshEngine);
+    if(opMap.get("MODEL")!=modelUrl) {
+		opMap.put("MODEL", modelUrl);
+    	var modelSelect = addSelect("ModelC", "Model", modelUrl, refreshEngine);
+    }
 }
 
 function refreshBodies() {
 	var series = $.trim(getText("Series"));
-	var modelUrl = "http://www.skidin.com/models/"
+	var url = "http://www.skidin.com/models/"
 	if(series) {
-		modelUrl += series;
+		url += series;
 	} else {
-		modelUrl += "index";
+		url += "index";
 	}
-	var select = dijit.byId("Body");
-    select.removeOption(select.getOptions());
-	$.getJSON(modelUrl, function(json) {
-		for(idx in json) {
-            var obj = json[idx];
-            var body = $.trim(obj['bid']);
-            var option = { label: body, value: body };
-            if(!select.getOptions(body)) {
-				select.addOption(option);
+	if(opMap.get("BODY")!=url) {
+		opMap.put("BODY", url);
+		var select = dijit.byId("Body");
+    	select.removeOption(select.getOptions());
+		$.getJSON(url, function(json) {
+			for(idx in json) {
+    	        var obj = json[idx];
+    	        var body = $.trim(obj['bid']);
+    	        var option = { label: body, value: body };
+    	        if(!select.getOptions(body)) {
+					select.addOption(option);
+				}
 			}
-		}
-    });
+    	});
+	}
 }
 
 
