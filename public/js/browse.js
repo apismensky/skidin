@@ -43,6 +43,7 @@ require(["dojo/dom",
         var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index", refreshModels);
         bodySelect.set('style','width: 150px; overflow: hidden;');
         bodySelect.on("change", function(){
+        	changeBodyIcon();
         	refreshModels();
   		});
         var modelSelect = addSelect("ModelC", "Model", "http://www.skidin.com/models/index", refreshEngine);
@@ -68,6 +69,19 @@ require(["dojo/dom",
 	    addSearchButton(); 
 	    refreshAll();   
 }); 
+
+function changeBodyIcon() {
+	var body = getText("Body");
+	if(body=="Lim") {
+		document.getElementById("body_icon").src = 'img/body/sedan.png';
+	} else if(body=="SAV") {
+		document.getElementById("body_icon").src = 'img/body/suv.png';
+	} else if(body=="Cou") {
+		document.getElementById("body_icon").src = 'img/body/coupe.png';
+	} else if(body=="Roa") {
+		document.getElementById("body_icon").src = 'img/body/compact.png';
+	}
+}
 
 function changeFlag() {
 	var region = getText("Region");
@@ -277,6 +291,7 @@ function refreshBodies() {
 				}
 			}
     	});
+    	changeBodyIcon();
 	}
 }
 
