@@ -51,7 +51,9 @@ require(["dojo/dom",
         	refreshEngine();
   		});
 	    var regionSelect = addSelectWithOptions("RegionC", "Region", regions);
+	    regionSelect.set('style','width: 70px; overflow: hidden;');
 	    regionSelect.on("change", function(){
+	    	changeFlag();
         	refreshEngine();
   		});
 	    var steeringSelect = addSelectWithOptions("SteeringC", "Steering", steering);
@@ -67,6 +69,14 @@ require(["dojo/dom",
 	    refreshAll();   
 }); 
 
+function changeFlag() {
+	var region = getText("Region");
+	if(region=="US") {
+		document.getElementById("region_flag").src = 'img/usflag.jpg';
+	} else {
+		document.getElementById("region_flag").src = 'img/euflag.jpg';
+	}
+}
 
 function addEngineSelect(url, callback) {
 	var select = dijit.byId("Engine");
@@ -153,6 +163,7 @@ function refreshProdMonth() {
 			select.on("change", function(){
     	    	refreshDiagrams;
   			});
+  			select.set('style','width: 90px; overflow: hidden;');
  		}
  		if(currentProdCode) {
     		$.getJSON(url, function(json) {
