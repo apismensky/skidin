@@ -1,0 +1,47 @@
+.product.product-view
+  .product-view-gallery
+    .product-thumb
+      = image_tag 'AutoPart5.jpg'
+
+  .product-view-details
+    h1.product-name = @product.description
+    h2.product-points #{@product.price} usd
+
+    br
+
+    = form_tag cart_path do
+      = hidden_field_tag 'product_id', @product.sysid
+      = submit_tag "Add to Cart", class: 'oc-btn'
+
+    .product-description
+
+      = @product.description
+      br
+      b Part Number:
+      = @product.partno
+      br
+      b From Date:
+      = @product.fromdate
+      br
+      b Up to date:
+      = @product.uptodate
+
+      br
+      b Did:
+      = @product.did
+
+      br
+      b Dno:
+      = @product.dno
+
+      br
+      b Supplement:
+      = @product.supplement
+
+      br
+      b Quantity:
+      = @product.qty
+
+      br
+      b Notes:
+      = @product.notes
