@@ -8,7 +8,7 @@ var emptyLabel = "&nbsp;&nbsp;&nbsp;&nbsp;";
 var maxSelectHeight = 200;
 var gridCounter = 0;
 var gridLayout = [[
-    {name:"id", field:"sysid", formatter: formatSysid},
+    {name:"id", field:"sysid", formatter: windowPartDetails},
 		{name:"Dno", field:"dno", width:"35px"},
 		{name:"Part #", field:"partno", width:"90px" },
 		{name:"Description", field:"description", width:"180px"},
@@ -24,8 +24,8 @@ function formatPartno(partno) {
 	return "<a href='javascript:showPartDetails(\""+partno+"\")'>"+partno+"</a>";
 }
 
-function formatSysid(sysid) {
-	return "<a href='/diagramparts/show/" + sysid + "'>" + sysid + "</a>";
+function windowPartDetails(sysid) {
+  return "<a href='javascript:window.showModalDialog(\"http://www.skidin.com/diagramparts/show/" + sysid + "\")'></a>";
 }
 
 function showPartDetails(partno) {
