@@ -33,10 +33,11 @@ Untitled::Application.routes.draw do
   match 'cart' => 'cart#create', :via => :post, :as => 'cart'
   match 'modalcart' => 'cart#modalcreate', :via => :post
   match 'cart/ok' => 'cart#ok', :via => :get
+  match 'checkout' => 'cart#checkout', :via => :get
 
   match 'cart/:id' => 'cart#destroy', :via => :delete, :as => 'cart_destroy'
 
-  match '/order' => 'diagramparts#order', :via => :post, :as => 'diagramparts_order'
+  match '/order' => 'diagramparts#order', :via => :get
 
   match 'tiresearch' => 'tire#search'
 

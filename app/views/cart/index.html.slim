@@ -18,8 +18,7 @@
         = submit_tag "Update", class: 'oc-btn'
         = link_to "Continue shopping", "/browse.html", class: 'oc-btn oc-btn-light'
     .cart-details
-      = form_tag '/order' do
-          
+      div
         .cart-summary
           h2.cart-title Order Summary
 
@@ -35,16 +34,5 @@
                 | Order Total:
               span.cart-summary-total-points #{@cart.total} usd
 
-
-            h2.cart-title Ship To This Address
-            = text_field_tag :name, @address.name,  :autofocus => true, placeholder: "Name"
-            = text_field_tag :line_1, @address.line_1,  placeholder: "Address Line 1"
-            = text_field_tag :line_2, @address.line_2, placeholder: "Address Line 2"
-            = text_field_tag :city, @address.city, placeholder: "City"
-            = text_field_tag :state, @address.state,  placeholder: "State"
-            = text_field_tag :postal_code, @address.postal_code, placeholder: "Postal Code"
-            = text_field_tag :phone_number, @address.phone_number, placeholder: "Phone Number"
-
-            = hidden_field_tag('product_id', 1)
-            = submit_tag "Place Order", class: 'oc-btn oc-btn-full'
+            = link_to "Place Order", "/checkout", class: 'oc-btn oc-btn-full'
           

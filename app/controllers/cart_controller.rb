@@ -5,6 +5,10 @@ class CartController < ApplicationController
     @address = address_for_user
   end
 
+  def checkout
+    index
+  end
+
   def create
     add_cart
     redirect_to :action => :index
