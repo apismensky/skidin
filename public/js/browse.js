@@ -25,6 +25,7 @@ require(["dojo/dom",
 	function(dom, domConstruct) {
 	    // Call reusable function to add select drop down:
         var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index", refreshModels);
+        seriesSelect.set('style','width: 160px; overflow: hidden;');
         seriesSelect.on("change", function(){
         	refreshBodies();
         	refreshModels();
@@ -113,7 +114,7 @@ function refreshProdCode(url) {
             var obj = json[idx];	
        		currentProdCode = $.trim(obj['id']); 
 			var description = obj['description'];	
-			html = "<p><b>"+currentProdCode+"</b>: "+description+"</p>";
+			html = "<h3 align='left'>"+currentProdCode+": "+description+"</h3>";
         }
         $("#ProdCodeDiv").html(html);
         refreshProdMonth();

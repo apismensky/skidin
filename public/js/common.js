@@ -25,7 +25,7 @@ function formatPartno(partno) {
 }
 
 function windowPartDetails(sysid) {
-  return "<a href='javascript:window.showModalDialog(\"http://www.skidin.com/diagramparts/modalshow/" + sysid + "\")'>"+sysid+"</a>";
+  return "<a href='javascript:window.showModalDialog(\"http://www.skidin.com/diagramparts/modalshow/" + sysid + "\",\"Part Details\",\"dialogHeight: 600px; dialogWidth: 700px; menubar:no; addressbar:no;\")'>"+sysid+"</a>";
 }
 
 function showPartDetails(partno) {
