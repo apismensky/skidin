@@ -35,16 +35,18 @@ require(["dojo/dom",
 	function(dom, domConstruct) {
 	    // Call reusable function to add select drop down:
         var seriesSelect = addSelect("SeriesC", "Series", "http://www.skidin.com/series/index", refreshModels);
-        seriesSelect.set('style','width: 160px; overflow: hidden;');
+        seriesSelect.set('style','width: 170px; overflow: hidden;');
         seriesSelect.on("change", function(){
         	refreshBodies();
         	refreshModels();
   		});
         var bodySelect = addSelect("BodyC", "Body", "http://www.skidin.com/bodies/index", refreshModels);
+        bodySelect.set('style','width: 150px; overflow: hidden;');
         bodySelect.on("change", function(){
         	refreshModels();
   		});
         var modelSelect = addSelect("ModelC", "Model", "http://www.skidin.com/models/index", refreshEngine);
+        modelSelect.set('style','width: 90px; overflow: hidden;');
         modelSelect.on("change", function(){
         	refreshEngine();
   		});
